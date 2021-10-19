@@ -12,6 +12,7 @@ namespace OdeToFood.Pages.Restaurants
 {
     public class EditModel : PageModel
     {
+        [BindProperty]
         public Restaurant Restaurant { get; set; }
         public IEnumerable<SelectListItem> Cuisines { get; set; }
 
@@ -30,6 +31,15 @@ namespace OdeToFood.Pages.Restaurants
             Cuisines = htmlHelper.GetEnumSelectList<CuisineType>();
             if (Restaurant == null)
                 return RedirectToPage("./NotFound");
+            return Page();
+        }
+
+        public IActionResult OnPost()
+        {
+            Restaurant = restaurantData.Update(Restaurant);
+            // need to do it again because HTTP request is stateless
+            Cuisines = htmlHelper.GetEnumSelectList<CuisineType>(); 
+            restaurantData.Commit();
             return Page();
         }
     }
