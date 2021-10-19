@@ -42,6 +42,7 @@ namespace OdeToFood.Pages.Restaurants
                 // need to do it again because HTTP request is stateless
                 Cuisines = htmlHelper.GetEnumSelectList<CuisineType>();
                 restaurantData.Commit();
+                return RedirectToPage("./Detail", new { restaurantId = Restaurant.Id });
             }
             return Page();
         }
