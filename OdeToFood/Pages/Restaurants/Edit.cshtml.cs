@@ -15,6 +15,7 @@ namespace OdeToFood.Pages.Restaurants
         [BindProperty]
         public Restaurant Restaurant { get; set; }
         public IEnumerable<SelectListItem> Cuisines { get; set; }
+       
 
         private readonly IRestaurantData restaurantData;
         private readonly IHtmlHelper htmlHelper;
@@ -44,9 +45,14 @@ namespace OdeToFood.Pages.Restaurants
             if (Restaurant.Id > 0)
             {
                 Restaurant = restaurantData.Update(Restaurant);
+                TempData["Message"] = "Successfully Updated!";
             }
             else
+            {
                 Restaurant = restaurantData.Add(Restaurant);
+                TempData["Message"] = "Successfully Added!";
+            }
+                
             // need to do it again because HTTP request is stateless
             Cuisines = htmlHelper.GetEnumSelectList<CuisineType>();
             restaurantData.Commit();
