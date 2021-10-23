@@ -1,4 +1,8 @@
-﻿namespace OdeToFood.Data
+﻿using OdeToFood.Core;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace OdeToFood.Data
 {
     public class InMemoryRestaurantData : IRestaurantData
     {
