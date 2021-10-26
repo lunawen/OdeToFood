@@ -3,6 +3,11 @@
 @{
 }
 
+<h2>Client Restaurants</h2>
+
+<table id="restaurants" class="table">
+</table>
+
 @section Scripts {
     <environment include="Development">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css" />
@@ -14,11 +19,23 @@
     </environment>
 
     <script>
+        var cuisines = ["Unknown", "Mexican", "Italian", "Indian"];
         $(function () {
             $.ajax("/api/restaurants/",
                 { method: "get" })
                 .then(function (response) {
-                    console.dir(response);
+                    $("#restaurants").dataTable({
+                        data: response,
+                        columns: [
+                            { "data": "name" },
+                            { "data": "location" },
+                            {
+                                "data": "cuisine", "render": function (data) {
+                                    return cuisines[data];
+                                }
+                            }
+                        ]
+                    });
                 });
         })
     </script>
